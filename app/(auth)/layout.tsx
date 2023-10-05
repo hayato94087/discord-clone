@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = (props) => {
   return (
-    <div className='bg-red-500 h-full'>
+    <div className='h-full flex items-center justify-center'>
       {props.children}
     </div>
   );
