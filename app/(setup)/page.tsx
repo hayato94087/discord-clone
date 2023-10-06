@@ -1,12 +1,12 @@
-import {redirect} from 'next/navigation'
-import {FC} from 'react'
-import { initialProfile } from '@/lib/initial-profile';
-import { db } from '@/lib/db';
+import { redirect } from "next/navigation";
 
-interface SetupPageProps {}
+import { db } from "@/lib/db";
+import { initialProfile } from "@/lib/initial-profile";
+import { InitialModal } from "@/components/modals/initial-modal";
 
-const SetupPage: FC<SetupPageProps> = async ({}) => {
+const SetupPage = async () => {
   const profile = await initialProfile();
+
   const server = await db.server.findFirst({
     where: {
       members: {
@@ -17,15 +17,11 @@ const SetupPage: FC<SetupPageProps> = async ({}) => {
     }
   });
 
-  if(server) {
-    return redirect(`/servers/${server.id}`)
+  if (server) {
+    return redirect(`/servers/${server.id}`);
   }
 
-  return (
-    <div className=''>
-      Create a Server
-    </div>
-  );
-};
-
+  return <InitialModal />;
+}
+ 
 export default SetupPage;
