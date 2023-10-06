@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
+import { FileUpload } from "@/components/file-upload";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Server name is required" }),
@@ -29,7 +30,7 @@ const formSchema = z.object({
 });
 
 export const InitialModal = () => {
-  const [isMounted, setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -49,8 +50,8 @@ export const InitialModal = () => {
     console.log(values);
   };
 
-  if(!isMounted){
-    return null
+  if (!isMounted) {
+    return null;
   }
 
   return (
@@ -69,19 +70,32 @@ export const InitialModal = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
               <div className="flex items-center justify-center text-center">
-                // Todo: Image Upload
-                TODO: Image Upload
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload endpoint="serverImage" value={field.value} onChange={field.onChange} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field, formState }) => (
                   <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">Servere name</FormLabel>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Servere name
+                    </FormLabel>
                     <FormControl>
-                      <Input disabled={isLoading} className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                      placeholder="Enter server name"
-                      {...field}
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="Enter server name"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
