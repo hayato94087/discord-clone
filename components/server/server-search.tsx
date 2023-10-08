@@ -30,7 +30,6 @@ const ServerSearch: FC<SearverSearchProps> = ({data}) => {
         setOpen((open) => !open)
       }
     }
-
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
   },[])
